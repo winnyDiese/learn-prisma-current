@@ -1,16 +1,23 @@
-import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient()
+import { PrismaClient } from '@prisma/client';
 
-async function main() {
-    
-    const post = await prisma.post.create({
-        data:{
-            title:"My first post",
-            body:"My first body"
-        }
-    })
+const prisma = new PrismaClient();
 
-    console.log(post)
-}
-main()
+const app = async () => {
+    try {
+
+        const post = await prisma.post.create({
+            data: {
+                title: "My first post",
+                body: "My first body"
+            },
+        });
+
+        console.log(post);
+        
+    } catch (error) {
+        console.error('Error creating post:', error);
+    }
+};
+
+app();
