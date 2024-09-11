@@ -14,7 +14,7 @@ const app = async () => {
         });
 
         console.log(post);
-        
+
     } catch (error) {
         console.error('Error creating post:', error);
     }
