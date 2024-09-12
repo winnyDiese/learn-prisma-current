@@ -86,6 +86,17 @@ app.put('/api/posts/:id',async (req,res) => {
   }
 })
 
+app.delete('/api/posts/:id', async (req,res) => {
+  const {id} = req.params
+  
+  try {
+    const existingPost = await prisma.post.findUnique({where:{id:id}})
+    
+  } catch (error) {
+    console.log(error)
+  }
+})
+
 const PORT = process.env.PORT || 3001
 app.listen(PORT, ()=>{
     console.log(`Server is running on port ${PORT}`)
