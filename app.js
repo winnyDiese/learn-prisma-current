@@ -27,8 +27,7 @@ app.post('/api/posts', async (req, res) => {
       console.error(error);
       res.status(500).json({ error: 'Internal server error' });
     }
-  });
-  
+})
 
 app.get('/api/posts', async (req,res)=>{
     try {
@@ -38,6 +37,23 @@ app.get('/api/posts', async (req,res)=>{
         console.erreur(error)
         res.status(500).json({ error: 'Internal server error' });
     }
+})
+
+app.get('/api/posts/:id',async (req,res) => {
+  const {id} = req.params
+  try {
+
+    const post = await prisma.post.findUnique({
+      where:{id:id}
+    })
+
+    if(post) res.status(200).json(post)
+    else res.status(404).json({error:'Post not found'})
+
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({error:'Internal server error'})
+  }
 })
 
 const PORT = process.env.PORT || 3001
