@@ -56,6 +56,36 @@ app.get('/api/posts/:id',async (req,res) => {
   }
 })
 
+app.put('/api/posts/:id',async (req,res) => {
+  const {id} = req.params
+  const {title,content} = req.body
+
+  try {
+    const existingPost = await prisma.post.findUnique({
+      where: {id:id}
+    })
+
+    if(!existingPost) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+
+    // Mise à jour
+    const updatedPost = await prisma.post.update({
+      where:{id:id},
+      data:{
+        title:title || existingPost.title,
+        content:content || existingPost.content
+      }
+    })
+
+    res.status(200).json(updatedPost); // Renvoie le post mis à jour
+
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error: 'Internal server error' });
+  }
+})
+
 const PORT = process.env.PORT || 3001
 app.listen(PORT, ()=>{
     console.log(`Server is running on port ${PORT}`)
