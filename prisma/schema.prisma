@@ -15,7 +15,8 @@ datasource db {
 
 
 model Post {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  title String
-  body  String
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  body      String
+  createdAt DateTime @default(now())
 }
