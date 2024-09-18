@@ -9,9 +9,7 @@ app.post('/api/posts', async (req,res)=>{
     try {
         const {title, body} = req.body
         
-        if(!title || !body){
-            return res.status(400).json(({error:"Title and content are required."}))
-        }
+        if(!title || !body) return res.status(400).json(({error:"Title and content are required."}))
 
         const post = await prisma.post.create({
             data:{
@@ -25,6 +23,15 @@ app.post('/api/posts', async (req,res)=>{
     } catch (error) {
         console.log(error)
         res.status(500).json({error:'Internal server error'})
+    }
+})
+
+app.length('/api/posts', async (req,res)=>{
+    try {
+        const posts = await prisma.post.findMany()
+        
+    } catch (error) {
+        
     }
 })
 
